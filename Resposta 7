@@ -1,0 +1,109 @@
+
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <title>Resposta 7</title>
+    <meta charset="utf-8">
+</head>
+<style>
+    canvas {
+        background-color: rgb(0, 0, 0);
+        border: 10px solid rgb(37, 13, 254);
+        }
+</style>
+
+<body>
+    <canvas width="800" height="600"></canvas>
+    <script>
+
+        const CodigoTeclaCima = 38, CodigoTeclaBaixo = 40, CodigoTeclaEsquerda = 37, CodigoTeclaDireita = 39;
+        var movimentacaoEsquerda = movimentacaoDireita = movimentacaoCima = movimentacaoBaixo = false;
+        const tamanhodeblanka = 150, velocidade = 10;
+        var canvas = document.querySelector("canvas");
+        var contexto = canvas.getContext("2d");
+        let ponto = {
+            x: 280,
+            y: 200
+        };
+
+        atualizacao();
+
+        window.addEventListener("keydown", teclapressionada);
+
+        function teclapressionada(entrada) {
+            let chave = entrada.keyCode;
+
+            if (chave === CodigoTeclaEsquerda && chave !== CodigoTeclaDireita) {
+                movimentacaoEsquerda = true;
+            }
+            if (chave === CodigoTeclaDireita && chave !== CodigoTeclaEsquerda) {
+                movimentacaoDireita = true;
+            }
+            if (chave === CodigoTeclaCima && chave !== CodigoTeclaBaixo) {
+                movimentacaoCima = true;
+            }
+            if (chave === CodigoTeclaBaixo && chave !== CodigoTeclaCima) {
+                movimentacaoBaixo = true;
+            }
+        }
+
+        window.addEventListener("keyup", teclaliberada);
+
+        function teclaliberada(entrada) {
+            let chave = entrada.keyCode;
+
+            if (chave === CodigoTeclaEsquerda && chave !== CodigoTeclaDireita) {
+                movimentacaoEsquerda = false;
+            }
+            if (chave === CodigoTeclaDireita && chave !== CodigoTeclaEsquerda) {
+                movimentacaoDireita = false;
+            }
+            if (chave === CodigoTeclaCima && chave !== CodigoTeclaBaixo) {
+                movimentacaoCima = false;
+            }
+            if (chave === CodigoTeclaBaixo && chave !== CodigoTeclaCima) {
+                movimentacaoBaixo = false;
+            }
+        }
+
+        function movimentacao() {
+            if (movimentacaoEsquerda) {
+                ponto.x -= velocidade;
+            }
+            if (movimentacaoDireita) {
+                ponto.x += velocidade;
+            }
+            if (movimentacaoCima) {
+                ponto.y -= velocidade;
+            }
+            if (movimentacaoBaixo) {
+                ponto.y += velocidade;
+            }
+        }
+
+        function renderizacao() {
+           
+            let blanka = new Image();
+            blanka.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Pac_Man.svg/657px-Pac_Man.svg.png";
+            blanka.addEventListener("load", () => {
+                contexto.clearRect(0, 0, canvas.width, canvas.height);
+                ponto.x = Math.max(0, Math.min(canvas.width - tamanhodeblanka, ponto.x));
+                ponto.y = Math.max(0, Math.min(canvas.height - tamanhodeblanka, ponto.y));
+                contexto.drawImage(blanka, ponto.x, ponto.y, tamanhodeblanka, tamanhodeblanka);
+            });
+
+
+        }
+
+        function atualizacao() {
+            requestAnimationFrame(atualizacao, canvas);
+            renderizacao();
+            movimentacao();
+
+        }
+    </script>
+</body>
+
+</html>
