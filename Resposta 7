@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -18,9 +17,9 @@
     <canvas width="800" height="600"></canvas>
     <script>
 
-        const CodigoTeclaCima = 38, CodigoTeclaBaixo = 40, CodigoTeclaEsquerda = 37, CodigoTeclaDireita = 39;
-        var movimentacaoEsquerda = movimentacaoDireita = movimentacaoCima = movimentacaoBaixo = false;
-        const tamanhodeblanka = 150, velocidade = 10;
+        const TcCima = 38, TcBaixo = 40, TcEsquerda = 37, TcDireita = 39;
+        var MovEsq = MovDir = MovCima = MovBaixo = false;
+        const BlankaTamanho = 150, Speed = 10;
         var canvas = document.querySelector("canvas");
         var contexto = canvas.getContext("2d");
         let ponto = {
@@ -28,79 +27,79 @@
             y: 200
         };
 
-        atualizacao();
+       Atualizar();
 
-        window.addEventListener("keydown", teclapressionada);
+        window.addEventListener("keydown", TcPress);
 
-        function teclapressionada(entrada) {
+        function TcPress(entrada) {
             let chave = entrada.keyCode;
 
-            if (chave === CodigoTeclaEsquerda && chave !== CodigoTeclaDireita) {
-                movimentacaoEsquerda = true;
+            if (chave === TcEsquerda && chave !== TcDireita) {
+                MovEsq = true;
             }
-            if (chave === CodigoTeclaDireita && chave !== CodigoTeclaEsquerda) {
-                movimentacaoDireita = true;
+            if (chave === TcDireita && chave !== TcEsquerda) {
+               MovDir = true;
             }
-            if (chave === CodigoTeclaCima && chave !== CodigoTeclaBaixo) {
-                movimentacaoCima = true;
+            if (chave ===TcCima && chave !== TcBaixo) {
+               MovCima = true;
             }
-            if (chave === CodigoTeclaBaixo && chave !== CodigoTeclaCima) {
-                movimentacaoBaixo = true;
+            if (chave === TcBaixo && chave !==TcCima) {
+                MovBaixo = true;
             }
         }
 
-        window.addEventListener("keyup", teclaliberada);
+        window.addEventListener("keyup", TcLiber);
 
-        function teclaliberada(entrada) {
+        function TcLiber(entrada) {
             let chave = entrada.keyCode;
 
-            if (chave === CodigoTeclaEsquerda && chave !== CodigoTeclaDireita) {
-                movimentacaoEsquerda = false;
+            if (chave === TcEsquerda && chave !== TcDireita) {
+                MovEsq = false;
             }
-            if (chave === CodigoTeclaDireita && chave !== CodigoTeclaEsquerda) {
-                movimentacaoDireita = false;
+            if (chave === TcDireita && chave !== TcEsquerda) {
+               MovDir = false;
             }
-            if (chave === CodigoTeclaCima && chave !== CodigoTeclaBaixo) {
-                movimentacaoCima = false;
+            if (chave ===TcCima && chave !== TcBaixo) {
+               MovCima = false;
             }
-            if (chave === CodigoTeclaBaixo && chave !== CodigoTeclaCima) {
-                movimentacaoBaixo = false;
-            }
-        }
-
-        function movimentacao() {
-            if (movimentacaoEsquerda) {
-                ponto.x -= velocidade;
-            }
-            if (movimentacaoDireita) {
-                ponto.x += velocidade;
-            }
-            if (movimentacaoCima) {
-                ponto.y -= velocidade;
-            }
-            if (movimentacaoBaixo) {
-                ponto.y += velocidade;
+            if (chave === TcBaixo && chave !==TcCima) {
+                MovBaixo = false;
             }
         }
 
-        function renderizacao() {
+        function Movimento() {
+            if (MovEsq) {
+                ponto.x -= Speed;
+            }
+            if (MovDir) {
+                ponto.x += Speed;
+            }
+            if (MovCima) {
+                ponto.y -= Speed;
+            }
+            if (MovBaixo) {
+                ponto.y += Speed;
+            }
+        }
+
+        function Reder() {
            
             let blanka = new Image();
             blanka.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Pac_Man.svg/657px-Pac_Man.svg.png";
             blanka.addEventListener("load", () => {
                 contexto.clearRect(0, 0, canvas.width, canvas.height);
-                ponto.x = Math.max(0, Math.min(canvas.width - tamanhodeblanka, ponto.x));
-                ponto.y = Math.max(0, Math.min(canvas.height - tamanhodeblanka, ponto.y));
-                contexto.drawImage(blanka, ponto.x, ponto.y, tamanhodeblanka, tamanhodeblanka);
+                ponto.x = Math.max(0, Math.min(canvas.width - BlankaTamanho, ponto.x));
+                ponto.y = Math.max(0, Math.min(canvas.height - BlankaTamanho, ponto.y));
+                contexto.drawImage(blanka, ponto.x, ponto.y, BlankaTamanho, BlankaTamanho);
             });
 
 
         }
 
-        function atualizacao() {
-            requestAnimationFrame(atualizacao, canvas);
-            renderizacao();
-            movimentacao();
+        function Atualizar() {
+            requestAnimationFrame(Atualizar, canvas);
+            Reder();
+            Movimento();
 
         }
     </script>
