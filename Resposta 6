@@ -27,11 +27,11 @@
             y: 200
         };
 
-        atualizacao();
+       Atualizar();
 
-        window.addEventListener("keydown", teclapressionada);
+        window.addEventListener("keydown", TcPress);
 
-        function teclapressionada(entrada) {
+        function TcPress(entrada) {
             let chave = entrada.keyCode;
 
             if (chave === TcEsquerda && chave !== TcDireita) {
@@ -48,9 +48,9 @@
             }
         }
 
-        window.addEventListener("keyup", teclaliberada);
+        window.addEventListener("keyup", TcLiber);
 
-        function teclaliberada(entrada) {
+        function TcLiber(entrada) {
             let chave = entrada.keyCode;
 
             if (chave === TcEsquerda && chave !== TcDireita) {
@@ -92,8 +92,8 @@
             contexto.fill();
         }
 
-        function atualizacao() {
-            requestAnimationFrame(atualizacao, canvas);
+        function Atualizar() {
+            requestAnimationFrame( Atualizar, canvas);
             render();
             Movimento();
 
